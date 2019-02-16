@@ -214,11 +214,14 @@ func ipxeScript(mach Machine, spec *Spec, serverHost string) ([]byte, error) {
         return fmt.Sprintf("%s", url.QueryEscape(mach.MAC.String()))
 	}
 	cmdline, err := expandCmdline(spec.Cmdline, template.FuncMap{"ID": f})
-	cmdline, err := expandCmdline(spec.Cmdline, template.FuncMap{"MAC": m})
 	if err != nil {
 		return nil, fmt.Errorf("expanding cmdline %q: %s", spec.Cmdline, err)
 	}
-	b.WriteString(cmdline)
+	cmdline2, err := expandCmdline(spec.Cmdline, template.FuncMap{"MAC": m})
+	if err != nil {
+		return nil, fmt.Errorf("expanding cmdline %q: %s", spec.Cmdline, err)
+	}
+	b.WriteString(cmdline2)
 	b.WriteByte('\n')
 
 	return b.Bytes(), nil
