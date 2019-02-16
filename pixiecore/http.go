@@ -217,7 +217,7 @@ func ipxeScript(mach Machine, spec *Spec, serverHost string) ([]byte, error) {
 	if err != nil {
 		return nil, fmt.Errorf("expanding cmdline %q: %s", spec.Cmdline, err)
 	}
-	cmdline2, err := expandCmdline(spec.Cmdline, template.FuncMap{"MAC": m})
+	cmdline2, err := expandCmdline(cmdline, template.FuncMap{"MAC": m})
 	if err != nil {
 		return nil, fmt.Errorf("expanding cmdline %q: %s", spec.Cmdline, err)
 	}
