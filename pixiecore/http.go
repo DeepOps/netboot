@@ -214,8 +214,8 @@ func ipxeScript(mach Machine, spec *Spec, serverHost string) ([]byte, error) {
 	if err != nil {
 		return nil, fmt.Errorf("expanding cmdline %q: %s", spec.Cmdline, err)
 	}
-    fmt.Sprintf(&b, "interface=%s", url.QueryEscape(mach.MAC.String()))
 	b.WriteString(cmdline)
+    fmt.Fprintf(&b, "interface=%s", url.QueryEscape(mach.MAC.String()))
 	b.WriteByte('\n')
 
 	return b.Bytes(), nil
