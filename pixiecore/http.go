@@ -207,6 +207,8 @@ func ipxeScript(mach Machine, spec *Spec, serverHost string) ([]byte, error) {
 		fmt.Fprintf(&b, "initrd=initrd%d ", i)
 	}
 
+    fmt.Fprintf(&b, "interface=%s ", mach.MAC.String())
+
 	f := func(id string) string {
 		return fmt.Sprintf("http://%s/_/file?name=%s", serverHost, url.QueryEscape(id))
 	}
@@ -215,7 +217,6 @@ func ipxeScript(mach Machine, spec *Spec, serverHost string) ([]byte, error) {
 		return nil, fmt.Errorf("expanding cmdline %q: %s", spec.Cmdline, err)
 	}
 	b.WriteString(cmdline)
-    fmt.Fprintf(&b, "interface=%s", url.QueryEscape(mach.MAC.String()))
 	b.WriteByte('\n')
 
 	return b.Bytes(), nil
